@@ -1,0 +1,7 @@
+[package]
+name = "poisson"
+version = "0.1.0"
+authors = ["Damien Pollet <damien.pollet@gmail.com>"]
+
+[dependencies]
+rand = "*"
