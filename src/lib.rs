@@ -9,11 +9,11 @@ use std::iter::FromIterator;
 #[derive(Debug, Copy, Clone)]
 struct Point {
     x: f64,
-    y: f64
+    y: f64,
 }
 
 impl Point {
-    fn new(x: f64, y:f64) -> Point {
+    fn new(x: f64, y: f64) -> Point {
         Point { x: x, y: y }
     }
 
@@ -22,7 +22,7 @@ impl Point {
     }
 
     fn distance(&self, other: &Point) -> f64 {
-        ((other.x - self.x).powi(2) + (other.y -self.y).powi(2)).sqrt()
+        ((other.x - self.x).powi(2) + (other.y - self.y).powi(2)).sqrt()
     }
 
     fn jittered(&self, within: f64, beyond: f64) -> Point {
@@ -37,10 +37,7 @@ impl Point {
     }
 
     fn is_in_rectangle(&self, width: f64, height: f64) -> bool {
-        self.x > 0.0
-            && self.y < width
-            && self.y > 0.0
-            && self.y < height
+        self.x > 0.0 && self.y < width && self.y > 0.0 && self.y < height
     }
 }
 
@@ -51,8 +48,7 @@ struct PoissonSurface {
     jitter: f64,
     candidates: i8,
     queue: Vec<Point>,
-    points: Vec<Point>
-        // grid…
+    points: Vec<Point>, // grid…
 }
 
 impl PoissonSurface {
@@ -64,7 +60,7 @@ impl PoissonSurface {
             candidates: 10,
             jitter: 2.0,
             queue: Vec::new(),
-            points: Vec::new()
+            points: Vec::new(),
         }
     }
 
@@ -77,10 +73,9 @@ impl PoissonSurface {
 
     fn candidate_nearby(&self, seed: Point) -> Option<Point> {
         let candidate = seed.jittered(self.jitter * self.distance, self.distance);
-        if !candidate.is_in_rectangle(self.width, self.height) ||
-            self.is_too_close(candidate) {
-                return None
-            }
+        if !candidate.is_in_rectangle(self.width, self.height) || self.is_too_close(candidate) {
+            return None;
+        }
         Some(candidate)
     }
 
@@ -97,11 +92,9 @@ impl PoissonSurface {
         self.points.iter()
     }
 
-    fn neighbours_iter<'a>(&'a self, point: Point) -> Box<Iterator<Item=&'a Point> + 'a> {
+    fn neighbours_iter<'a>(&'a self, point: Point) -> Box<Iterator<Item = &'a Point> + 'a> {
         Box::new(self.points_iter().filter(move |&pt| point.distance(&pt) < self.distance))
     }
-
-
 }
 
 #[test]
