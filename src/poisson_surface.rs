@@ -60,6 +60,7 @@ impl PoissonSurface {
     }
 }
 
+
 #[test]
 fn test_surface() {
     let mut s = PoissonSurface::new();
@@ -68,15 +69,20 @@ fn test_surface() {
 
     assert!(s.points_iter().collect::<Vec<&Point>>().is_empty());
 
-    let p = Point::new(0.5, 0.5);
-    s.insert(p);
-    assert!(s.points_iter().collect::<Vec<&Point>>().len() == 1);
-    assert!(s.is_too_close(Point::new(0.55, 0.45)));
+    let p1 = Point::new(0.5, 0.5);
+    let p2 = Point::new(0.45, 0.55);
 
-    if let Some(c) = s.candidate_nearby(p) {
+    s.insert(p1);
+    assert!(s.points_iter().count() == 1);
+    assert!(s.is_too_close(p2));
+
+    s.insert(p2);
+    let n = s.neighbours_iter(p1).collect::<Vec<&Point>>();
+    assert!(n.len() == 2);
+    assert!(n.contains(&&p1));
+    assert!(n.contains(&&p2));
+
+    if let Some(c) = s.candidate_nearby(p1) {
         assert!(!s.is_too_close(c));
-        println!("Candidate: {:?}", c);
-    } else {
-        println!("Unlucky candidate");
     }
 }
