@@ -36,6 +36,12 @@ impl Point {
     }
 }
 
+impl PartialEq for Point {
+    fn eq(&self, other: &Point) -> bool {
+        self.x == other.x && self.y == other.y
+    }
+}
+
 #[test]
 fn test_new_point() {
     let pt = Point::new(4.2, 5.1);
