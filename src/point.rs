@@ -37,8 +37,31 @@ impl Point {
 }
 
 #[test]
-fn test_point() {
+fn test_new_point() {
     let pt = Point::new(4.2, 5.1);
     assert!(pt.x == 4.2);
     assert!(pt.y == 5.1);
+}
+
+#[test]
+fn test_point_origin() {
+    let pt = Point::origin();
+        assert!(pt.x == 0.0);
+        assert!(pt.y == 0.0);
+}
+
+#[test]
+fn test_distance_to_self() {
+    let pt = Point::new(4.2, 5.1);
+    let d = pt.distance(&pt);
+    assert!(d == 0.0);
+}
+
+#[test]
+fn test_distance_to_origin() {
+    let pt = Point::new(4.0, 3.0);
+    let d1 = pt.distance(&Point::origin());
+    let d2 = Point::origin().distance(&pt);
+    assert!(d1 == 5.0);
+    assert!(d2 == 5.0);
 }
