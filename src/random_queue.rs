@@ -6,7 +6,9 @@ trait RandomQueue<T> {
 
 impl<T> RandomQueue<T> for Vec<T> {
     fn pick<R: Rng>(&mut self, rng: &mut R) -> Option<T> {
-        if self.is_empty() { return None }
+        if self.is_empty() {
+            return None;
+        }
         let picked = rng.gen_range(0, self.len());
         Some(self.swap_remove(picked))
     }
@@ -29,10 +31,12 @@ fn test_pick_one() {
 #[test]
 fn test_pick_many() {
     let mut rng = ::rand::thread_rng();
-    let mut vec = vec![1,2,3];
+    let mut vec = vec![1, 2, 3];
     if let Some(picked) = vec.pick(&mut rng) {
         assert!(picked == 1 || picked == 2 || picked == 3);
         assert!(vec.len() == 2);
         assert!(!vec.contains(&picked));
-    } else { assert!(false); }
+    } else {
+        assert!(false);
+    }
 }
