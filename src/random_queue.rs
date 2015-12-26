@@ -1,6 +1,6 @@
 use rand::Rng;
 
-trait RandomQueue<T> {
+pub trait RandomQueue<T> {
     fn pick<R: Rng>(&mut self, rng: &mut R) -> Option<T>;
 }
 

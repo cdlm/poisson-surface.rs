@@ -2,6 +2,7 @@ use rand::distributions::{IndependentSample, Range};
 use std::slice::Iter;
 
 use point::Point;
+use random_queue::RandomQueue;
 
 
 struct PoissonSurface {
@@ -44,7 +45,8 @@ impl PoissonSurface {
 
     fn insert(&mut self, point: Point) {
         // insert in proximity grid
-        self.points.push(point)
+        self.queue.push(point);
+        self.points.push(point);
     }
 
     fn is_too_close(&self, candidate: Point) -> bool {
@@ -57,6 +59,17 @@ impl PoissonSurface {
 
     fn neighbours_iter<'a>(&'a self, point: Point) -> Box<Iterator<Item = &'a Point> + 'a> {
         Box::new(self.points_iter().filter(move |&pt| point.distance(&pt) < self.distance))
+    }
+
+    fn generate_point(&mut self) -> Option<Point> {
+        if let Some(seed) = self.queue.pick(&mut ::rand::thread_rng()) {
+            if let Some(candidate) = self.candidate_nearby(seed) {
+                self.insert(candidate);
+                self.queue.push(seed);
+                return Some(candidate);
+            }
+        }
+        None
     }
 }
 
