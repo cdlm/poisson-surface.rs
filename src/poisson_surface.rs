@@ -1,5 +1,5 @@
-use ::rand::distributions::{IndependentSample, Range};
-use ::std::slice::Iter;
+use rand::distributions::{IndependentSample, Range};
+use std::slice::Iter;
 
 use point::Point;
 

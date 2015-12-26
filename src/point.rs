@@ -1,4 +1,4 @@
-use ::rand::distributions::{IndependentSample, Range};
+use rand::distributions::{IndependentSample, Range};
 
 
 #[derive(Debug, Copy, Clone)]
@@ -52,8 +52,8 @@ fn test_new_point() {
 #[test]
 fn test_point_origin() {
     let pt = Point::origin();
-        assert!(pt.x == 0.0);
-        assert!(pt.y == 0.0);
+    assert!(pt.x == 0.0);
+    assert!(pt.y == 0.0);
 }
 
 #[test]
