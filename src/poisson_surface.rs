@@ -74,6 +74,7 @@ fn test_surface() {
 
     s.insert(p1);
     assert!(s.points_iter().count() == 1);
+    assert!(s.points_iter().collect::<Vec<&Point>>().contains(&&p1));
     assert!(s.is_too_close(p2));
 
     s.insert(p2);
