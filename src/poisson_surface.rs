@@ -18,9 +18,9 @@ pub struct PoissonSurface {
 impl PoissonSurface {
     pub fn new() -> PoissonSurface {
         PoissonSurface {
-            width: 1.0,
-            height: 1.0,
-            distance: 0.1,
+            width: 640.0,
+            height: 480.0,
+            distance: 10.0,
             candidates: 10,
             jitter: 2.0,
             queue: Vec::new(),

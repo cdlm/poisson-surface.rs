@@ -20,7 +20,16 @@ impl App {
 
     fn render(&mut self, args: RenderArgs, window: PistonWindow) {
         window.draw_2d(|ctx, gfx| {
+            let red = [1.0, 0.0, 0.0, 1.0];
+            let dot = Ellipse::new(red);
+
             clear([0.0, 0.0, 0.0, 1.0], gfx);
+            for p in self.poisson.points_iter() {
+                dot.draw(ellipse::circle(p.x, p.y, 2.0),
+                         default_draw_state(),
+                         ctx.transform,
+                         gfx);
+            }
         })
     }
 }
@@ -31,6 +40,8 @@ fn main() {
                                    .build()
                                    .unwrap();
     let mut app = App::new(PoissonSurface::new());
+    let seed = app.poisson.random_point();
+    app.poisson.insert(seed);
 
     for e in window {
         match e.event {
