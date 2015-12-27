@@ -5,3 +5,4 @@ authors = ["Damien Pollet <damien.pollet@gmail.com>"]
 
 [dependencies]
 rand = "*"
+piston_window = "*"
