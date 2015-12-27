@@ -16,7 +16,7 @@ pub struct PoissonSurface {
 }
 
 impl PoissonSurface {
-    fn new() -> PoissonSurface {
+    pub fn new() -> PoissonSurface {
         PoissonSurface {
             width: 1.0,
             height: 1.0,
