@@ -5,7 +5,7 @@ use point::Point;
 use random_queue::RandomQueue;
 
 
-struct PoissonSurface {
+pub struct PoissonSurface {
     width: f64,
     height: f64,
     distance: f64,
@@ -28,14 +28,14 @@ impl PoissonSurface {
         }
     }
 
-    fn random_point(&self) -> Point {
+    pub fn random_point(&self) -> Point {
         let mut rng = ::rand::thread_rng();
         let x = Range::new(0.0, self.width).ind_sample(&mut rng);
         let y = Range::new(0.0, self.height).ind_sample(&mut rng);
         Point::new(x, y)
     }
 
-    fn candidate_nearby(&self, seed: Point) -> Option<Point> {
+    pub fn candidate_nearby(&self, seed: Point) -> Option<Point> {
         (0..self.candidates)
             .map(|_| seed.jittered(self.jitter * self.distance, self.distance))
             .find(|&candidate| {
@@ -43,25 +43,25 @@ impl PoissonSurface {
             })
     }
 
-    fn insert(&mut self, point: Point) {
+    pub fn insert(&mut self, point: Point) {
         // insert in proximity grid
         self.queue.push(point);
         self.points.push(point);
     }
 
-    fn is_too_close(&self, candidate: Point) -> bool {
+    pub fn is_too_close(&self, candidate: Point) -> bool {
         self.neighbours_iter(candidate).any(|pt| candidate.distance(pt) < self.distance)
     }
 
-    fn points_iter(&self) -> Iter<Point> {
+    pub fn points_iter(&self) -> Iter<Point> {
         self.points.iter()
     }
 
-    fn neighbours_iter<'a>(&'a self, point: Point) -> Box<Iterator<Item = &'a Point> + 'a> {
+    pub fn neighbours_iter<'a>(&'a self, point: Point) -> Box<Iterator<Item = &'a Point> + 'a> {
         Box::new(self.points_iter().filter(move |&pt| point.distance(&pt) < self.distance))
     }
 
-    fn generate_point(&mut self) -> Option<Point> {
+    pub fn generate_point(&mut self) -> Option<Point> {
         if let Some(seed) = self.queue.pick(&mut ::rand::thread_rng()) {
             if let Some(candidate) = self.candidate_nearby(seed) {
                 self.insert(candidate);
