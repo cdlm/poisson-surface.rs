@@ -38,9 +38,9 @@ impl PoissonSurface {
     fn candidate_nearby(&self, seed: Point) -> Option<Point> {
         (0..self.candidates)
             .map(|_| seed.jittered(self.jitter * self.distance, self.distance))
-            .find(|&candidate|
-                  candidate.is_in_rectangle(self.width, self.height)
-                  && !self.is_too_close(candidate))
+            .find(|&candidate| {
+                candidate.is_in_rectangle(self.width, self.height) && !self.is_too_close(candidate)
+            })
     }
 
     fn insert(&mut self, point: Point) {
