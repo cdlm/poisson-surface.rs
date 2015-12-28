@@ -16,7 +16,11 @@ impl App {
 
     fn input(&mut self, input: Input) {}
 
-    fn update(&mut self, args: UpdateArgs) {}
+    fn update(&mut self, args: UpdateArgs) {
+        if let Some(point) = self.poisson.generate_point() {
+            self.poisson.insert(point);
+        }
+    }
 
     fn render(&mut self, args: RenderArgs, window: PistonWindow) {
         window.draw_2d(|ctx, gfx| {
