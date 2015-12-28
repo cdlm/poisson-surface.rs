@@ -1,5 +1,11 @@
+extern crate piston;
+use piston::input::*;
+
+extern crate graphics;
+use graphics::*;
+
 extern crate piston_window;
-use piston_window::*;
+use piston_window::{PistonWindow, WindowSettings, OpenGL};
 
 extern crate poisson;
 use poisson::PoissonSurface;
@@ -39,10 +45,14 @@ impl App {
 }
 
 fn main() {
+    let opengl_version = OpenGL::V3_2;
     let window: PistonWindow = WindowSettings::new("Poisson disc sampling", [640, 480])
                                    .exit_on_esc(true)
+                                   .opengl(opengl_version)
+                                   .samples(8)
                                    .build()
                                    .unwrap();
+
     let mut app = App::new(PoissonSurface::new());
     let seed = app.poisson.random_point();
     app.poisson.insert(seed);
