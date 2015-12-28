@@ -64,8 +64,7 @@ impl PoissonSurface {
     pub fn generate_point(&mut self) -> Option<Point> {
         if let Some(seed) = self.queue.pick(&mut ::rand::thread_rng()) {
             if let Some(candidate) = self.candidate_nearby(seed) {
-                self.insert(candidate);
-                self.queue.push(seed);
+                self.queue.push(seed); // put the seed back since it's not done yet
                 return Some(candidate);
             }
         }
