@@ -8,3 +8,6 @@ rand = "*"
 piston = "*"
 piston_window = "*"
 piston2d-graphics = "*"
+
+fps_counter = "*"
+find_folder = "*"
